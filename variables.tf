@@ -21,7 +21,7 @@ variable "subnet_ids" {
 variable "ecs_alb" {
   description = "ECS Application Load Balancer"
   type        = string
-  default     = "Artifactory-ALB"
+  default     = "Jenkins-ALB"
 }
 
 variable "alb_internal" {
@@ -105,19 +105,19 @@ variable "attachment_port" {
 variable "alb_security_group" {
   description = "ALB Security Group Name"
   type        = string
-  default     = "Artifactory-ALB-Security-Group"
+  default     = "Jenkins-ALB-Security-Group"
 }
 
 variable "ecs_security_group" {
   description = "ECS Security Group Name"
   type        = string
-  default     = "Artifactory-ECS-Security-Group"
+  default     = "Jenkins-ECS-Security-Group"
 }
 
 variable "efs_security_group" {
   description = "EFS Security Group Name"
   type        = string
-  default     = "Artifactory-EFS-Security-Group"
+  default     = "Jenkins-EFS-Security-Group"
 }
 
 variable "cidr_block" {
@@ -142,13 +142,13 @@ variable "egress_protocol" {
 variable "cluster_name" {
   description = "ECS Cluster Name"
   type        = string
-  default     = "artifactory-cluster"
+  default     = "jenkins-cluster"
 }
 
 variable "ecs_task_family" {
   description = "ECS Task Definition Service Type"
   type        = string
-  default     = "artifactory-task"
+  default     = "jenkins-task"
 }
 
 variable "network_mode" {
@@ -166,13 +166,13 @@ variable "requires_compatibilities" {
 variable "container_name" {
   description = "ECS Container Name"
   type        = string
-  default     = "artifactory"
+  default     = "jenkins"
 }
 
-variable "artifactory_image" {
-  description = "Artifactory Container Image"
+variable "jenkins_image" {
+  description = "Jenkins Container Image"
   type        = string
-  default     = "docker.bintray.io/jfrog/artifactory-oss:latest"
+  default     = "jenkins/jenkins:lts"
 }
 
 variable "essential" {
@@ -214,7 +214,7 @@ variable "container_protocol" {
 variable "container_health_check_command" {
   description = "ECS Container Health Check Command"
   type        = list(string)
-  default     = ["CMD-SHELL", "curl -f http://localhost:8081 || exit 1"]
+  default     = ["CMD-SHELL", "curl -f http://localhost:8080 || exit 1"]
 }
 
 variable "container_health_check_interval" {
@@ -238,37 +238,37 @@ variable "container_health_check_retries" {
 variable "container_environment_name" {
   description = "ECS Container Environment Name"
   type        = string
-  default     = "ARTIFACTORY_HOME"
+  default     = "JAVA_OPTS"
 }
 
 variable "container_environment_value" {
   description = "ECS Container Environment Value"
   type        = string
-  default     = "/opt/jfrog/artifactory"
+  default     = "-Djenkins.install.runSetupWizard=false"
 }
 
 variable "container_storage_name" {
   description = "ECS Container Storage Name"
   type        = string
-  default     = "ARTIFACTORY_STORAGE"
+  default     = "JENKINS_STORAGE"
 }
 
 variable "container_storage_value" {
   description = "ECS Container Storage Value"
   type        = string
-  default     = "/opt/jfrog/artifactory/data"
+  default     = "var/jenkins_home"
 }
 
 variable "container_mount_source_volume" {
   description = "ECS Container Mount Source Volume"
   type        = string
-  default     = "Artifactory"
+  default     = "Jenkins"
 }
 
 variable "container_mount_path" {
   description = "ECS Container Mount Path"
   type        = string
-  default     = "/opt/jfrog/artifactory/data"
+  default     = "/var/jenkins_home"
 }
 
 variable "container_mount_read_only" {
@@ -286,7 +286,7 @@ variable "container_log_driver" {
 variable "volume_name" {
   description = "EFS Volume Name" 
   type        = string
-  default     = "artifactory-volume"
+  default     = "jenkins-volume"
 }
 
 variable "transit_encryption" {
@@ -298,7 +298,7 @@ variable "transit_encryption" {
 variable "efs_root_directory" {
   description = "EFS Root Directory"
   type        = string
-  default     = "/opt/jfrog/artifactory"
+  default     = "/var/jenkins_home"
 }
 
 variable "efs_iam_authentication" {
@@ -310,7 +310,7 @@ variable "efs_iam_authentication" {
 variable "ecs_service_name" {
   description = "Name of ECS Service"
   type        = string
-  default     = "artifactory-service"
+  default     = "jenkins-service"
 }
 
 variable "launch_type" {
@@ -334,7 +334,7 @@ variable "ecs_assign_public_ip" {
 variable "creation_token" {
   description = "EFS Creation Token"
   type        = string
-  default     = "artifactory"
+  default     = "jenkins"
 }
 
 variable "efs_encryption" {
@@ -350,44 +350,44 @@ variable "transition_to_ia" {
 }
 
 variable "cloudwatch_log_group" {
-  description = "Artifactory Cloudwatch Log Group"
+  description = "Jenkins Cloudwatch Log Group"
   type        = string
-  default     = "Artifactory-Container-Log-Group"
+  default     = "Jenkins-Container-Log-Group"
 }
 
 variable "cloudwatch_log_retention" {
-  description = "Artifactory Cloudwatch Log Retention in days"
+  description = "Jenkins Cloudwatch Log Retention in days"
   type        = number
   default     = "365"
 }
 
 variable "cloudwatch_log_stream" {
-  description = "Artifactory Cloudwatch Log Stream Name"
+  description = "Jenkins Cloudwatch Log Stream Name"
   type        = string
-  default     = "Artifactory-Container-Log-Stream"
+  default     = "Jenkins-Container-Log-Stream"
 }
 
 #iam.tf - Variables
 variable "iam_role_name" {
-  description = "IAM Artifactory Role Name"
+  description = "IAM Jenkins Role Name"
   type        = string
-  default     = "artifactory-ecs-instance-role"
+  default     = "Jenkins-ecs-instance-role"
 }
 
 variable "iam_policy_name" {
-  description = "IAM Artifactory Policy Name"
+  description = "IAM Jenkins Policy Name"
   type        = string
-  default     = "artifactory-ecs-access-policy"
+  default     = "jenkins-ecs-access-policy"
 }
 
 variable "iam_role_ecs" {
-  description = "IAM Artifactory Task Execution Role Name"
+  description = "IAM Jenkins Task Execution Role Name"
   type        = string
-  default     = "artifactory-ecs-task-execution"
+  default     = "jenkins-ecs-task-execution"
 }
 
 variable "iam_policy_ecs" {
-  description = "IAM Artifactory ECS Task Execution Policy"
+  description = "IAM Jenkins ECS Task Execution Policy"
   type        = string
-  default     = "Artifactory-ECS-Task-Policy"
+  default     = "Jenkins-ECS-Task-Policy"
 }
