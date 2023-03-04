@@ -86,14 +86,6 @@ resource "aws_lb_target_group" "main" {
   tags = local.tags
 }
 
-#Application Load Balancer Target Group Attachment
-#resource "aws_lb_target_group_attachment" "main" {
-#   target_group_arn = aws_lb_target_group.main.arn
-#   target_id        = aws_ecs_task_definition.main.arn
-#   port             = var.attachment_port
-
-#}
-
 #ALB Security Group
 resource "aws_security_group" "alb" {
   name        = var.alb_security_group
