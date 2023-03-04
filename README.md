@@ -1,5 +1,5 @@
 # ecs-fargate-terraform
-An ECS/Fargate solution which runs a Serverless Container, while it's logs are transferred across to an S3 bucket via Cloudwatch and Kinesis - provisioned via Terraform.
+An ECS/Fargate Jenkins Container solution which  while it's logs are transferred across to an S3 bucket via Cloudwatch and Kinesis - provisioned via Terraform.
 
 # Architecture
 Enter Image
@@ -72,15 +72,15 @@ Enter Image
 
 Enter Image
 
+#### EFS Verification
+
+Enter Image
+
 #### S3 Bucket Verification
 
 Enter Image
 
 #### Cloudwatch Verification
-
-Enter Image
-
-#### Kinesis Verification
 
 Enter Image
 
@@ -108,12 +108,15 @@ Enter Image
 | ------------- |:-------------:|
 | aws           | ~>3.50.0      |
 
+## Data Blocks
+| Name          | Type       |
+| ------------- |:-------------:|
+| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_vpc) | Data |
+| [aws_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_subnet) | Data |
 
 ## Resources
 | Name          | Type       |
 | ------------- |:-------------:|
-| [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_vpc) | resource |
-| [aws_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_subnet) | resource |
 | [aws_internet_gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_internet_gateway) | resource |
 | [aws_route_table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_route_table) | resource |
 | [aws_route_table_association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_route_table_association) | resource |
@@ -121,3 +124,15 @@ Enter Image
 | [aws_lb_listener](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_lb_listener) | resource |
 | [aws_lb_target_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_lb_target_group) | resource |
 | [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_security_group) | resource |
+| [aws_ecs_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_ecs_cluster) | resource |
+| [aws_ecs_task_definition](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_ecs_task_definition) | resource |
+| [aws_ecs_service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_ecs_service) | resource |
+| [aws_efs_file_system](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_efs_file_system) | resource |
+| [aws_efs_mount_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_efs_mount_target) | resource |
+| [aws_efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_efs_access_point) | resource |
+| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_stream](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_cloudwatch_log_stream) | resource |
+| [aws_iam_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_iam_role) | resource |
+| [aws_iam_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_iam_policy) | resource |
+| [aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/aws_iam_role_policy_attachment) | resource |
+
