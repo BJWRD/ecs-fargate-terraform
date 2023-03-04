@@ -10,18 +10,6 @@ variable "vpc_id" {
   default     = "vpc-bb0a42d3"
 }
 
-variable "internet_gateway_id" {
-  description = "Internet Gateway ID"
-  type        = string
-  default     = "igw-00bde6cffdae04a5f"
-}
-
-variable "route_table_id" {
-  description = "Route Table ID"
-  type        = string
-  default     = "rtb-131d187b"
-}
-
 #vpc.tf - Variables
 
 variable "subnet_ids" {
