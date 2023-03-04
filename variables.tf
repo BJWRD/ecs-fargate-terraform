@@ -262,7 +262,7 @@ variable "container_storage_value" {
 variable "container_mount_source_volume" {
   description = "ECS Container Mount Source Volume"
   type        = string
-  default     = "Jenkins"
+  default     = "jenkins-volume"
 }
 
 variable "container_mount_path" {
