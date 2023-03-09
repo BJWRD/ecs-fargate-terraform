@@ -1,3 +1,15 @@
+variable "project_name" {
+  description = "Project Name"
+  type        = string
+  default     = "ecs-fargate-terraform"
+}
+
+variable "environment" {
+  description = "Environment Type"
+  type        = string
+  default     = "Development"
+}
+
 variable "region" {
   description = "AWS Region"
   type        = string
@@ -26,9 +38,8 @@ variable "ecs_alb" {
 
 variable "alb_internal" {
   description = "Application Load Balancer Network Type"
-  type        = string
-  default     = "false"
-}
+  type        = bool
+  default     = true
 
 variable "load_balancer_type" {
   description = "The type of Load Balancer"
@@ -256,13 +267,13 @@ variable "container_storage_name" {
 variable "container_storage_value" {
   description = "ECS Container Storage Value"
   type        = string
-  default     = "var/jenkins_home"
+  default     = "/var/jenkins_home"
 }
 
 variable "container_mount_source_volume" {
   description = "ECS Container Mount Source Volume"
   type        = string
-  default     = "jenkins-volume"
+  default     = "jenkins-home"
 }
 
 variable "container_mount_path" {
@@ -286,7 +297,7 @@ variable "container_log_driver" {
 variable "volume_name" {
   description = "EFS Volume Name" 
   type        = string
-  default     = "jenkins-volume"
+  default     = "jenkins-home"
 }
 
 variable "transit_encryption" {
@@ -368,18 +379,6 @@ variable "cloudwatch_log_stream" {
 }
 
 #iam.tf - Variables
-variable "iam_role_name" {
-  description = "IAM Jenkins Role Name"
-  type        = string
-  default     = "Jenkins-ecs-instance-role"
-}
-
-variable "iam_policy_name" {
-  description = "IAM Jenkins Policy Name"
-  type        = string
-  default     = "jenkins-ecs-access-policy"
-}
-
 variable "iam_role_ecs" {
   description = "IAM Jenkins Task Execution Role Name"
   type        = string
