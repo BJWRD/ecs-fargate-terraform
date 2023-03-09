@@ -137,18 +137,6 @@ variable "cidr_block" {
   default     = "0.0.0.0/0"
 }
 
-variable "ingress_protocol" {
-  description = "Egress Protocol for the Security Groups"
-  type        = string
-  default     = "tcp"
-}
-
-variable "egress_protocol" {
-  description = "Security Group Egress Protocol"
-  type        = string
-  default     = "-1"
-}
-
 #ecs.tf - Variables
 variable "cluster_name" {
   description = "ECS Cluster Name"
