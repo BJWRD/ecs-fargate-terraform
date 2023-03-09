@@ -72,6 +72,13 @@ resource "aws_ecs_task_definition" "main" {
         access_point_id = aws_efs_access_point.main.id
         iam             = var.efs_iam_authentication 
         }
+       driver_opts = {
+        "type"   = "none"
+        "device" = "/path/to/host/dir"
+        "o"      = "bind"
+        "uid"    = "1000"
+        "gid"    = "1000"
+      }
       }
     }
 
