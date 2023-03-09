@@ -95,14 +95,14 @@ resource "aws_security_group" "alb" {
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = var.ingress_protocol
+    protocol    = "tcp"
     cidr_blocks = [var.cidr_block]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = var.egress_protocol
+    protocol    = "-1"
     cidr_blocks = [var.cidr_block]
   }
 }
@@ -118,7 +118,7 @@ resource "aws_security_group" "ecs" {
     description     = "Allow inbound traffic from the load balancer"
     from_port       = 80
     to_port         = 80
-    protocol        = var.ingress_protocol
+    protocol        = "tcp"
     cidr_blocks     = [var.cidr_block]
     security_groups = [aws_security_group.alb.id]
   }
@@ -126,7 +126,7 @@ resource "aws_security_group" "ecs" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = var.egress_protocol
+    protocol    = "-1"
     cidr_blocks = [var.cidr_block]
   }
 
@@ -134,7 +134,7 @@ resource "aws_security_group" "ecs" {
     description = "Allow EFS Connectivity"
     from_port   = 2049
     to_port     = 2049
-    protocol    = var.ingress_protocol
+    protocol    = "tcp"
     security_groups = [aws_security_group.efs.id]
   }
 }
@@ -149,7 +149,7 @@ resource "aws_security_group" "efs" {
     description     = "Allow EFS Connectivity"
     from_port       = 2049
     to_port         = 2049
-    protocol        = var.ingress_protocol
+    protocol        = "tcp"
     security_groups = [aws_security_group.ecs.id]
   }
 }
