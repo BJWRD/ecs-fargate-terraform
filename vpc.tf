@@ -1,7 +1,7 @@
 locals {
   tags = {
-    project     = "ecs-fargate-terraform"
-    environment = "dev"
+    project     = var.project_name
+    environment = var.environment
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_lb" "main" {
   name               = var.ecs_alb
   internal           = var.alb_internal
   load_balancer_type = var.load_balancer_type
-  security_groups    = [aws_security_group.alb.id, aws_security_group.ecs.id]
+  security_groups    = [aws_security_group.alb.id]
   subnets            = var.subnet_ids
 
   tags = local.tags
@@ -113,13 +113,6 @@ resource "aws_security_group" "ecs" {
   description = "Security Group for ECS Container"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow traffic from the same security group"
-    from_port   = 0
-    to_port     = 65535
-    protocol    = var.ingress_protocol
-    cidr_blocks = [var.cidr_block]
-  }
 
   ingress {
     description     = "Allow inbound traffic from the load balancer"
@@ -142,7 +135,7 @@ resource "aws_security_group" "ecs" {
     from_port   = 2049
     to_port     = 2049
     protocol    = var.ingress_protocol
-    cidr_blocks = [var.cidr_block]
+    security_groups = [aws_security_group.efs.id]
   }
 }
 
@@ -157,7 +150,6 @@ resource "aws_security_group" "efs" {
     from_port       = 2049
     to_port         = 2049
     protocol        = var.ingress_protocol
-    cidr_blocks     = [var.cidr_block]
     security_groups = [aws_security_group.ecs.id]
   }
 }
