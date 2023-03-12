@@ -116,11 +116,11 @@ resource "aws_security_group" "ecs" {
 
   ingress {
     description     = "Allow inbound traffic from the load balancer"
-    from_port       = 80
-    to_port         = 80
+    from_port       = 8080
+    to_port         = 8080
     protocol        = "tcp"
     cidr_blocks     = [var.cidr_block]
-    security_groups = [aws_security_group.alb.id]
+    #security_groups = [aws_security_group.alb.id]
   }
 
   egress {
