@@ -10,6 +10,8 @@ variable "environment" {
   default     = "Development"
 }
 
+#vpc.tf - Variables
+
 variable "region" {
   description = "AWS Region"
   type        = string
@@ -21,8 +23,6 @@ variable "vpc_id" {
   type        = string
   default     = "vpc-bb0a42d3"
 }
-
-#vpc.tf - Variables
 
 variable "subnet_ids" {
   description = "subnet IDs which resources will be launched in"
@@ -40,6 +40,7 @@ variable "alb_internal" {
   description = "Application Load Balancer Network Type"
   type        = bool
   default     = true
+}
 
 variable "load_balancer_type" {
   description = "The type of Load Balancer"
@@ -68,13 +69,13 @@ variable "alb_listener_type" {
 variable "alb_target_group" {
   description = "Application Load Balancer Target Group"
   type        = string
-  default     = "alb-target-group"
+  default     = "ALB-Target-Group"
 }
 
 variable "alb_target_group_port" {
   description = "Application Load Balancer Target Group Port"
   type        = number
-  default     = 8081
+  default     = 8080
 }
 
 variable "alb_target_group_protocol" {
@@ -110,7 +111,7 @@ variable "alb_target_group_timeout" {
 variable "attachment_port" {
   description = "Application Load Balancer Target Group Attachment"
   type        = number
-  default     = 8081
+  default     = 8080
 }
 
 variable "alb_security_group" {
@@ -141,13 +142,13 @@ variable "cidr_block" {
 variable "cluster_name" {
   description = "ECS Cluster Name"
   type        = string
-  default     = "jenkins-cluster"
+  default     = "Jenkins-Cluster"
 }
 
 variable "ecs_task_family" {
   description = "ECS Task Definition Service Type"
   type        = string
-  default     = "jenkins-task"
+  default     = "Jenkins-Task"
 }
 
 variable "network_mode" {
@@ -165,7 +166,7 @@ variable "requires_compatibilities" {
 variable "container_name" {
   description = "ECS Container Name"
   type        = string
-  default     = "jenkins"
+  default     = "Jenkins"
 }
 
 variable "jenkins_image" {
@@ -195,13 +196,13 @@ variable "container_memory" {
 variable "container_port" {
   description = "ECS Container Port"
   type        = number
-  default     = 8081
+  default     = 8080
 }
 
 variable "container_host_port" {
   description = "ECS Container Host Port"
   type        = number
-  default     = 8081
+  default     = 8080
 }
 
 variable "container_protocol" {
@@ -283,7 +284,7 @@ variable "container_log_driver" {
 }
 
 variable "volume_name" {
-  description = "EFS Volume Name" 
+  description = "EFS Volume Name"
   type        = string
   default     = "jenkins-home"
 }
@@ -309,7 +310,7 @@ variable "efs_iam_authentication" {
 variable "ecs_service_name" {
   description = "Name of ECS Service"
   type        = string
-  default     = "jenkins-service"
+  default     = "Jenkins-Service"
 }
 
 variable "launch_type" {
@@ -348,6 +349,42 @@ variable "transition_to_ia" {
   default     = "AFTER_30_DAYS"
 }
 
+variable "efs_gid"{
+  description = "EFS Group ID"
+  type        = number
+  default     = 0
+}
+
+variable "efs_uid"{
+  description = "EFS User ID"
+  type        = number
+  default     = 0
+}
+
+variable "efs_path"{
+  description = "EFS directory path"
+  type        = string
+  default     = "/var/jenkins_home"
+}
+
+variable "efs_owner_gid"{
+  description = "EFS Group Owner ID"
+  type        = number
+  default     = 1000
+}
+
+variable "efs_owner_uid"{
+  description = "EFS User Owner ID"
+  type        = number
+  default     = 1000
+}
+
+variable "efs_permissions"{
+  description = "EFS Chmod permissions set on the path"
+  type        = number
+  default     = 755
+}
+
 variable "cloudwatch_log_group" {
   description = "Jenkins Cloudwatch Log Group"
   type        = string
@@ -367,10 +404,11 @@ variable "cloudwatch_log_stream" {
 }
 
 #iam.tf - Variables
+
 variable "iam_role_ecs" {
   description = "IAM Jenkins Task Execution Role Name"
   type        = string
-  default     = "jenkins-ecs-task-execution"
+  default     = "Jenkins-ECS-Task-Execution"
 }
 
 variable "iam_policy_ecs" {
