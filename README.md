@@ -1,8 +1,5 @@
 # ecs-fargate-terraform
-An ECS/Fargate Jenkins Container solution which  while it's logs are transferred across to an S3 bucket via Cloudwatch and Kinesis - provisioned via Terraform.
-
-# Architecture
-Enter Image
+An ECS/Fargate Jenkins Container solution. The container logs are exported to Cloudwatch; permissions are managed via IAM roles/policies and the container uses EFS for additional storage - provisioned via Terraform.
 
 # Prerequisites
 * An AWS Account with an IAM user capable of creating resources – `AdminstratorAccess`
@@ -36,19 +33,22 @@ This section details the deployment and teardown of the three-tier-architecture.
 #### 4.	Initialise the TF directory
     terraform init
 
-#### 5. Ensure the terraform code is formatted and validated 
+#### 5. VPC & Subnet Updates
+Update both the VPC and Subnet variables within the `variables.tf`file - with your own VPC and Subnet ID's.
+
+#### 6. Ensure the terraform code is formatted and validated 
     terraform fmt && terraform validate
 
-#### 6. `tfsec` - vulnerability check
+#### 7. `tfsec` - vulnerability check
     tfsec
     
-#### 7. Create an execution plan
+#### 8. Create an execution plan
     terraform plan
 
-#### 8. Execute terraform configuration 
+#### 9. Execute terraform configuration 
     terraform apply --auto-approve
     
-Enter Image
+<img width="521" alt="image" src="https://user-images.githubusercontent.com/83971386/224559680-dcb6b91c-6ed2-42d4-aa06-3ffd2ce7b9f4.png">
 
 
 ## Verification Steps 
@@ -58,55 +58,48 @@ Check the infrastructure deployment status, by enter the following terraform com
 
      terraform show
 
-Enter Image
+<img width="521" alt="image" src="https://user-images.githubusercontent.com/83971386/224559718-b917bcbf-29dd-4ef1-bfa8-13d8a57caea4.png">
 
 **NOTE:** You may want to ouput `terraform show` to a .txt file for easier viewing i.e. terraform show > tf_infrastructure.txt
 
 Alternatively, log into the AWS Console and verify your AWS infrastructure deployment from there.
 
-#### VPC Verification
-
-Enter Image
-
 #### ECS Verification
 
-Enter Image
+<img width="633" alt="image" src="https://user-images.githubusercontent.com/83971386/224559972-bcf8cb2a-001a-47c4-a65a-c3654af3b74b.png">
 
 #### EFS Verification
 
-Enter Image
-
-#### S3 Bucket Verification
-
-Enter Image
+<img width="653" alt="image" src="https://user-images.githubusercontent.com/83971386/224560002-0ea0b114-fac2-49aa-8b0a-f6d0fead00fe.png">
 
 #### Cloudwatch Verification
 
-Enter Image
+<img width="568" alt="image" src="https://user-images.githubusercontent.com/83971386/224560045-15d180fe-9ee1-4c75-9c32-4226f8cfe470.png">
 
-#### 2. Verify that the container is accessible
+#### 2. Verify Application accessibility 
+Access the ECS Container's external link and search within your browser to access the Jenkins application -
 
-Update
-    
-Enter Image
+<img width="627" alt="image" src="https://user-images.githubusercontent.com/83971386/224561337-7bc623ed-95ce-436d-8888-827de6f680e9.png">
+
+<img width="719" alt="image" src="https://user-images.githubusercontent.com/83971386/224560457-3c22207f-8f8a-4f2c-9466-932f2ca4085d.png">
 
 ## Teardown Steps
 
 ####  1. Destroy the deployed AWS Infrastructure 
 `terraform destroy --auto-approve`
 
-Enter Image
+<img width="394" alt="image" src="https://user-images.githubusercontent.com/83971386/224560852-57f09123-93b3-4f64-9652-cd5ad26c9e8e.png">
 
 ## Requirements
 | Name          | Version       |
 | ------------- |:-------------:|
-| terraform     | ~>1.3.9       |
-| aws           | ~>3.50.0      |
+| [terraform](https://registry.terraform.io)     | ~>1.3.9       |
+| [aws](https://registry.terraform.io/providers/hashicorp/aws)         | ~>3.50.0      |
 
 ## Providers
 | Name          | Version       |
 | ------------- |:-------------:|
-| aws           | ~>3.50.0      |
+| [aws](https://registry.terraform.io/providers/hashicorp/aws)           | ~>3.50.0      |
 
 ## Data Blocks
 | Name          | Type       |
