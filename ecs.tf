@@ -44,11 +44,11 @@ resource "aws_ecs_task_definition" "main" {
           value = var.container_storage_value
         }
       ]
-       mountPoints = [
+      mountPoints = [
         {
           sourceVolume  = var.container_mount_source_volume
-          containerPath = var.container_mount_path 
-          readOnly      = var.container_mount_read_only 
+          containerPath = var.container_mount_path
+          readOnly      = var.container_mount_read_only
         }
       ]
       logConfiguration = {
@@ -70,17 +70,10 @@ resource "aws_ecs_task_definition" "main" {
       root_directory     = var.efs_root_directory
       authorization_config {
         access_point_id = aws_efs_access_point.main.id
-        iam             = var.efs_iam_authentication 
-        }
-       driver_opts = {
-        "type"   = "none"
-        "device" = "/path/to/host/dir"
-        "o"      = "bind"
-        "uid"    = "1000"
-        "gid"    = "1000"
-      }
+        iam             = var.efs_iam_authentication
       }
     }
+  }
 
   tags = local.tags
 }
@@ -126,10 +119,21 @@ resource "aws_efs_mount_target" "main" {
   security_groups = [aws_security_group.efs.id]
 }
 
-#EFS File System Access Point
+#EFS File System Access Point - allows root access by Jenkins user
 resource "aws_efs_access_point" "main" {
   file_system_id = aws_efs_file_system.main.id
-
+  posix_user {
+    gid = var.efs_gid
+    uid = var.efs_uid
+  }
+  root_directory {
+    path = var.efs_path
+    creation_info {
+      owner_gid   = var.efs_owner_gid
+      owner_uid   = var.efs_owner_uid 
+      permissions = var.efs_permissions 
+    }
+  }
   tags = local.tags
 }
 
